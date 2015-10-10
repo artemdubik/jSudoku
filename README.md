@@ -17,6 +17,6 @@ Simply put jsudoku_ant_last.xml file into new jenkins job:
 Requirements
 -----
 
-Jenkins
-Checkstyle Plugin for Jenkins 3.43
-Ant 
+* Jenkins
+* Checkstyle Plugin for Jenkins 3.43
+* Ant 
