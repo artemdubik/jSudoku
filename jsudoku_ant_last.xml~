@@ -10,13 +10,12 @@
 	<property name="main.path" value="org/kdu/jsudoku/control/Controller.class" />
 
 	<!--Git variables-->
-	<property name="git.repo" value="jSudoku" />
-	<property name="classes.home" value="${git.repo}/bin" />
+	<property name="classes.home" value="jSudoku/bin" />
 	<property name="lib.home" value="${git.repo}/lib" />
 
 	<!--Checkstyle variables-->
-	<property name="checkstyle_ver" value="6.11.2" />
-	<property name="checkstyle_dir" value="/home/hudson/.hudson/checkstyle-${checkstyle_ver}/" />
+	<property name="checkstyle_ver" value="6.10.1" />
+	<property name="checkstyle_dir" value="/var/lib/jenkins/checkstyle-${checkstyle_ver}/" />
 	<property name="checkstyle_report" value="checkstyle_results.xml" />
 		
 	<!--Checkstyle-->
@@ -40,16 +39,16 @@
 			</exec>
 		</sequential>
 	</macrodef>
-        <!-- compile jSudoku-->
+
 	<target name="sub.compile" depends="sub.clear,git.getsource,checker">
-		<echo message="${msg_info_compi}" />
+		<echo message="INFO: Compiling ${app.name} - build ${app.version}..." />
 		<mkdir dir="${classes.home}" />
-		<javac source="1.7" srcdir="${git.repo}/src" includeantruntime="false" destdir="${classes.home}" debug="yes">
+		<javac source="1.7" srcdir="jSudoku/src" includeantruntime="false" destdir="${classes.home}" debug="yes">
 			<classpath refid="project.class.path" />
 		</javac>
 		<echo message="OKAY: ${app.name} - build ${app.version} compiled." />
 	</target>
-	<!-- Create jar file-->
+	
 	<target name="jar" depends="sub.compile,sub.manifest">
 		<echo message="Generating jar file..." />
 		<jar destfile="${app.name}.jar" basedir="${classes.home}" manifest="${classes.home}/META-INF/MANIFEST.MF">
@@ -58,7 +57,7 @@
 		</jar>
 		<echo message="${app.name}.jar Generated!" />
 	</target>
-	<!-- Create Manifest-->
+	
 	<target xmlns:xalan="http://xml.apache.org/xslt" name="sub.manifest">
 		<echo message="Generating manifest file..." />
 		<mkdir dir="${classes.home}/META-INF" />
@@ -70,7 +69,7 @@
 		</manifest>
 		<echo message="Manifest file Generated!" />
 	</target>
-	<!-- Clear folder-->
+	
 	<target name="sub.clear">
 		<echo message="INFO: Performing initial cleanup." />
 		<delete dir="jSudoku" />
@@ -78,15 +77,15 @@
 		<delete file="${checkstyle_report}" />
 		<echo message="OKAY: Cleaning completed." />
 	</target>
-	<!-- Clone repo-->
+	
 	<target name="git.getsource">
 		<echo message="--------- Git credentials -----------" />
 		<echo message="Destination folder: jSudoku" />
-		<echo message="Source link: https://github.com/brosseeliande/jSudoku.git" />
+		<echo message="Source link: ssh://ec2-52-29-32-31.eu-central-1.compute.amazonaws.com/home/git/jSudoku" />
 		<echo message="-------------------------------------" />
 		<git command="clone">
 			<args>
-				<arg value="https://github.com/brosseeliande/jSudoku.git" />
+				<arg value="ssh://ec2-52-29-32-31.eu-central-1.compute.amazonaws.com/home/git/jSudoku" />
 				<arg value="jSudoku" />
 			</args>
 		</git>
@@ -99,7 +98,7 @@
 		</fail>
 		<echo message="OKAY: Repository cloned." />
 	</target>
-	<!-- Run Checksyler-->
+	
 	<target name="checker">
 		<echo message="INFO: Running Checkstyle on source code..." />
 		<checkstyle config="${checkstyle_dir}/docs/sun_checks.xml" failOnViolation="false">
