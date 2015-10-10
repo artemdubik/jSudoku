@@ -40,15 +40,17 @@
 			</exec>
 		</sequential>
 	</macrodef>
-        <!-- compile jSudoku-->
+
+    <!-- compile jSudoku-->
 	<target name="sub.compile" depends="sub.clear,git.getsource,checker">
-		<echo message="${msg_info_compi}" />
+		<echo message="Compiling ${app.name} - build ${app.version}..." />
 		<mkdir dir="${classes.home}" />
 		<javac source="1.7" srcdir="${git.repo}/src" includeantruntime="false" destdir="${classes.home}" debug="yes">
 			<classpath refid="project.class.path" />
 		</javac>
-		<echo message="OKAY: ${app.name} - build ${app.version} compiled." />
+		<echo message="Sucsess: ${app.name} - build ${app.version} compiled." />
 	</target>
+
 	<!-- Create jar file-->
 	<target name="jar" depends="sub.compile,sub.manifest">
 		<echo message="Generating jar file..." />
@@ -58,6 +60,7 @@
 		</jar>
 		<echo message="${app.name}.jar Generated!" />
 	</target>
+
 	<!-- Create Manifest-->
 	<target xmlns:xalan="http://xml.apache.org/xslt" name="sub.manifest">
 		<echo message="Generating manifest file..." />
@@ -70,14 +73,16 @@
 		</manifest>
 		<echo message="Manifest file Generated!" />
 	</target>
+
 	<!-- Clear folder-->
 	<target name="sub.clear">
 		<echo message="INFO: Performing initial cleanup." />
 		<delete dir="jSudoku" />
 		<delete file="${app.name}.jar" />
 		<delete file="${checkstyle_report}" />
-		<echo message="OKAY: Cleaning completed." />
+		<echo message="Sucsess: Cleaning completed." />
 	</target>
+
 	<!-- Clone repo-->
 	<target name="git.getsource">
 		<echo message="--------- Git credentials -----------" />
@@ -90,15 +95,16 @@
 				<arg value="jSudoku" />
 			</args>
 		</git>
-		<fail message="CRIT: Cloning Failed! The directory `jSudoku` does not exist.">
+		<fail message="Cloning Failed! The directory `jSudoku` does not exist.">
 			<condition>
 				<not>
 					<available file="jSudoku" />
 				</not>
 			</condition>
 		</fail>
-		<echo message="OKAY: Repository cloned." />
+		<echo message="Sucsess: Repository cloned." />
 	</target>
+
 	<!-- Run Checksyler-->
 	<target name="checker">
 		<echo message="INFO: Running Checkstyle on source code..." />
