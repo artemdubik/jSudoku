@@ -6,7 +6,7 @@ Compiling JSudoku game (http://jsudokukadu.cvs.sourceforge.net/viewvc/jsudokukad
 Usage
 -----
 
-Simply put jsudoku_ant_last.xml file into new jenkins job:
+Simply put jsudoku_ant_last.xml file into new jenkins job workspace:
 
 1.Jenkins- New item (Freestyle project) - Build Now
 2.Put jsudoku_ant_last.xml file into workspace
